@@ -1,6 +1,4 @@
 import pandas as pd
-
-# Load or initialize inventory
 try:
     inventory = pd.read_csv("inventory.csv")
 except FileNotFoundError:
@@ -11,8 +9,6 @@ except FileNotFoundError:
     }
     inventory = pd.DataFrame(data)
     inventory.to_csv("inventory.csv", index=False)
-
-# Update inventory after a sale
 def update_inventory(item, quantity):
     if item in inventory['Item'].values:
         index = inventory[inventory['Item'] == item].index[0]
@@ -23,8 +19,6 @@ def update_inventory(item, quantity):
             print(f"Not enough {item} in stock.")
     else:
         print(f"{item} not found in inventory.")
-
-# Generate bill
 def generate_bill(items, quantities):
     total_bill = 0
     print("\n=== Bill ===")
@@ -39,21 +33,15 @@ def generate_bill(items, quantities):
             print(f"{item} not found in inventory.")
     print(f"Total: {total_bill:.2f}\n")
     return total_bill
-
-# Check for low stock
 def check_low_stock(threshold=20):
     low_stock_items = inventory[inventory['Quantity'] < threshold]['Item'].tolist()
     if low_stock_items:
         print("Low stock alert:", low_stock_items)
     else:
         print("All items are sufficiently stocked.")
-
-# Save inventory
 def save_inventory():
     inventory.to_csv("inventory.csv", index=False)
     print("Inventory saved.")
-
-# Menu for user interaction
 def menu():
     while True:
         print("\n1. Update Inventory")
@@ -76,7 +64,5 @@ def menu():
             break
         else:
             print("Invalid choice. Please try again.")
-
-# Run the program
 if _name_== "_main_":
     menu()
